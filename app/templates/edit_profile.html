@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluevix Edit Profile</title>
+    <link rel="stylesheet" href="{% static 'css/post_headers.css' %}">
+</head>
+<body>
+    <header class="header header--loggedIn">
+        <div class="containers">
+          <a href="{% url 'home' %}" class="header__logo">
+            <img src="{% static 'images/logo.png' %}" />
+            <h1>Bluevix</h1>
+          </a>
+
+
+          <nav class="header__menu">
+            <!-- Not Logged In -->
+            <!-- <a href="/login.html">
+              <img src="./assets/avatar.svg" />
+              <p>Login</p>
+            </a> -->
+  
+            <!-- Logged In -->
+
+          </nav>
+        </div>
+      </header>
+      <main class="create-room layout">
+        <div class="container">
+          <div class="layout__box" style="margin-top: 3%;">
+            <div class="settings layout__body">
+                <form class="form" action="#" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+
+                  {% for field in form %}
+                    <div class="form__group">
+                      <label for="name">{{field.label}}</label>
+                      {{field}}
+                    </div>
+                  {% endfor %}
+                  <div class="form__action">
+                    <a class="btn btn--dark" href="{% url 'profile' request.user.id %}">Cancel</a>
+                    <button class="btn btn--main" type="submit">Save</button>
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+      </main>
+      <script src="js/main.js"></script>
+</body>
+</html>

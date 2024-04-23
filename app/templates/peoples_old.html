@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <form action="" method="GET">
+        <input type="search" name="q" id="" placeholder="Search for People">
+        <br><br>
+    </form>
+
+    {% for user in users %}
+    <a href="{% url 'profile' user.id %}">
+    <img src="{{user.avatar.url}}" alt="" srcset="" width="4%">
+    <h3>{{user.name}}</h3>
+    <h5>@{{user.username}}</h5>
+    <br><hr>
+    </a>
+    {% endfor %}
+</body>
+</html>

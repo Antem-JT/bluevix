@@ -1,0 +1,194 @@
+{% for post in posts %}
+<div class="col-9" style="background: black; border: 1px solid rgb(59, 58, 58);">
+    <div class="card">
+            <div class="top">
+              <div class="roomListRoom__header">
+                  <a href="{% url 'profile' post.user.id %}" class="roomListRoom__author">
+                  <div class="avatar avatar--small">
+                      <img src="{{post.user.avatar.url}}" />
+                  </div>
+                  {% if post.user.verified == False %}
+                  <span style="color: white;">@{{post.user}}</span>
+                  {% else %}
+                  <span style="color: white;">@{{post.user}} 
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 116.87" width="15px">
+                      <defs>
+                        <style>
+                          .cls-1{fill:blue;fill-rule:evenodd;}.cls-2{fill:#fff;}
+                        </style>
+                      </defs>
+                      <title>verified-symbol</title>
+                      <polygon class="cls-1" points="61.37 8.24 80.43 0 90.88 17.79 111.15 22.32 109.15 42.85 122.88 58.43 109.2 73.87 111.15 94.55 91 99 80.43 116.87 61.51 108.62 42.45 116.87 32 99.08 11.73 94.55 13.73 74.01 0 58.43 13.68 42.99 11.73 22.32 31.88 17.87 42.45 0 61.37 8.24 61.37 8.24"/>
+                      <path class="cls-2" d="M37.92,65c-6.07-6.53,3.25-16.26,10-10.1,2.38,2.17,5.84,5.34,8.24,7.49L74.66,39.66C81.1,33,91.27,42.78,84.91,49.48L61.67,77.2a7.13,7.13,0,0,1-9.9.44C47.83,73.89,42.05,68.5,37.92,65Z"/>
+                    </svg>
+                  </span>
+                  {% endif %}
+                  </a>
+              </div>
+              
+              <h1 class="postTime">{{post.created|timesince}} ago</h1>
+      </div>
+      <div class="imgBx">
+          <a href="{{post.image.url}}"><img src="{{post.image.url}}"	alt=”post-1” class="cover"></a>
+      </div>
+      <p class="message" style="color: #fff;">{{post.description}}</p>
+
+        <div class="actionBtns" style="margin-left: 20px; margin-top: 10px;">
+            <div class="left">
+                <span class="heart" onclick="handleLikeButtonClick('{{ post.id }}')" data-post-id="{{ post.id }}">
+                    {% if request.user.is_authenticated %}
+                        {% if request.user in post.likes.all %}
+                            <button type="submit" style="background: transparent; border: none;">
+                                <svg aria-label="Liked" fill="#ed4956" height="24" viewBox="0 0 48 48" width="24">
+                                  <path d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"/>
+                                </svg>
+                            </button>
+                        {% else %}
+                            <button type="submit" style="background: transparent; border: none;">
+                                <svg aria-label="Like" fill="#fff" height="24" viewBox="0 0 48 48" width="24">
+                                  <path d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"/>
+                                </svg>
+                            </button>
+                        {% endif %}
+                    {% endif %}
+                </span>
+            </div>
+            {% if request.user == post.user %}
+            <div class="right" style="margin-right: 20px;">
+              <a href="{% url 'edit-post' post.id %}"><svg id="light" Class="_8-yf5"
+                Color="#262626"
+                Fill="#262626"
+                Role="img"
+                viewBox="0 0 48 48"
+                width="24" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="1000" xmlns="http://www.w3.org/2000/svg">
+                <g><path d="m23.5 22h-15c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h15c.276 0 .5.224.5.5s-.224.5-.5.5z"/></g><g><g><path d="m2.5 22c-.131 0-.259-.052-.354-.146-.123-.123-.173-.3-.133-.468l1.09-4.625c.021-.09.067-.173.133-.239l14.143-14.143c.565-.566 1.554-.566 2.121 0l2.121 2.121c.283.283.439.66.439 1.061s-.156.778-.439 1.061l-14.142 14.141c-.065.066-.148.112-.239.133l-4.625 1.09c-.038.01-.077.014-.115.014zm1.544-4.873-.872 3.7 3.7-.872 14.042-14.041c.095-.095.146-.22.146-.354 0-.133-.052-.259-.146-.354l-2.121-2.121c-.19-.189-.518-.189-.707 0zm3.081 3.283h.01z"/></g><g><path d="m17.889 10.146c-.128 0-.256-.049-.354-.146l-3.535-3.536c-.195-.195-.195-.512 0-.707s.512-.195.707 0l3.536 3.536c.195.195.195.512 0 .707-.098.098-.226.146-.354.146z"/></g></g></svg>
+              </a>
+              <a href="{% url 'delete-post' post.id %}">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" Class="_8-yf5"
+                Color="#262626"
+                Fill="#262626"
+                Role="img"
+                viewBox="0 0 48 48"
+                width="24" enable-background="new 0 0 24 24" height="24"  viewBox="0 0 32 32">
+                  <title>remove</title>
+                  <path d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z"></path>
+                  </svg>
+                  
+              </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <p style="margin-left: 20px; color: #fff;">
+            <b id="likescount_{{ post.id }}">{{ post.likes.count }}</b>
+            {% if post.likes.count == 1 %}
+                Like
+            {% else %}
+                Likes
+            {% endif %}
+        </p>
+
+        {% if post.location == None %}
+
+        {% else %}
+        <h1 class="postTime" style="color: #fff; font-size: 15px;">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" height="15px" viewBox="0 0 256 256" xml:space="preserve">
+            <defs>
+            </defs>
+            <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
+              <path d="M 45 90 c -1.415 0 -2.725 -0.748 -3.444 -1.966 l -4.385 -7.417 C 28.167 65.396 19.664 51.02 16.759 45.189 c -2.112 -4.331 -3.175 -8.955 -3.175 -13.773 C 13.584 14.093 27.677 0 45 0 c 17.323 0 31.416 14.093 31.416 31.416 c 0 4.815 -1.063 9.438 -3.157 13.741 c -0.025 0.052 -0.053 0.104 -0.08 0.155 c -2.961 5.909 -11.41 20.193 -20.353 35.309 l -4.382 7.413 C 47.725 89.252 46.415 90 45 90 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: red; fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+              <path d="M 45 45.678 c -8.474 0 -15.369 -6.894 -15.369 -15.368 S 36.526 14.941 45 14.941 c 8.474 0 15.368 6.895 15.368 15.369 S 53.474 45.678 45 45.678 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            </g>
+            </svg>
+          {{post.location}}</h1>
+        {% endif %} 
+
+        <div class="bottom" style="color: #fff;">
+          {% if post.hashtag == None %}
+
+          {% else %}
+          <a href="#" style="color: #fff;">
+              #{{post.hashtag}}
+          </a>
+          {% endif %}
+      </div>
+
+      {% for comment in post.comments.all|slice:":1" %}
+        <br>
+        <h1 class="postTime">@{{comment.user.username}} {{comment.text}}</h1>
+        
+        <br>
+        <hr class="postTime">
+        {% endfor %}
+        {% if post.comments.count > 1 %}
+        <li class="comments" style="display: none;">
+          {% for comment in post.comments.all %}
+          <br>
+          <h1 class="postTime">@{{comment.user.username}} {{comment.text}}</h1>
+          <br>
+          <hr class="postTime">
+          {% endfor %}
+        </li> <br>
+        <center><button id="tb" style="padding: 5px; background: black; border: none; color: white;" >View all comments</button></center>
+        {% endif %}
+        <div class="addComments" style="margin-left: 10px;">
+            <form action="{% url 'comment' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="post_id" value="{{post.id}}">
+              <input type="text" name="text" class="text" Placeholder="Add a comment…" style="margin-right: 20px; color: white;">
+            </form>                      
+        </div>
+
+    </div>
+</div>
+<br>
+{% endfor %}
+
+
+
+<script>
+    // Function to handle the like button click event for each post
+    function handleLikeButtonClick(postId) {
+        // Send a POST request using AJAX
+        $.ajax({
+            url: "{% url 'like' %}", // URL to send the request to
+            type: "POST", // HTTP method
+            data: {
+                post_id: postId, // Data to send with the request
+                csrfmiddlewaretoken: "{{ csrf_token }}" // Include CSRF token for security
+            },
+            success: function(data) {
+                // Handle the success response here
+                console.log("Done");
+                var newLikeCount = data.new_like_count;
+
+                // Update the like count displayed on the webpage for the corresponding post
+                updateLikeCount(postId, newLikeCount);
+
+                // Update the heart icon color for the corresponding post
+                updateHeartIcon(postId);
+            }
+        });
+    }
+
+    // Function to update the color of the heart icon based on the like status
+    function updateHeartIcon(postId) {
+        // Get the heart icon element for the corresponding post
+        var heartIcon = document.querySelector('.heart[data-post-id="' + postId + '"] button svg');
+
+        // Get the current like status
+        var isLiked = heartIcon.getAttribute('fill') === '#ed4956';
+
+        // Toggle the color of the heart icon
+        heartIcon.setAttribute('fill', isLiked ? '#262626' : '#ed4956');
+    }
+
+    // Function to update the like count displayed on the webpage for the corresponding post
+    function updateLikeCount(postId, newLikeCount) {
+        // Get the like count element for the corresponding post
+        var likeCountElement = document.getElementById('likescount_' + postId);
+
+        // Update the like count displayed on the webpage for the corresponding post
+        likeCountElement.innerHTML = newLikeCount;
+    }
+</script>

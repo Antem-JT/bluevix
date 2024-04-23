@@ -1,0 +1,25 @@
+{% for post in posts %}
+<h4>
+    <img src="{{post.user.avatar.url}}" alt="" style="width: 2%;">
+    <a href="{% url 'profile' post.user.id %}">@{{post.user}}</a>  
+    {% if post.hashtag == None %}
+
+    {% else %}
+    <p>is in {{post.location}}</p>
+    {% endif %}
+    <p>Posted {{post.created|timesince}} ago</p>
+</h4>
+{% if request.user == post.user %}
+    <a href="{% url 'edit-post' post.id %}">Edit</a>  
+    <a href="{% url 'delete-post' post.id %}">Delete</a>
+{% endif %}
+<p>{{post.description}}</p>
+<a href="{{post.image.url}}"><img src="{{post.image.url}}" alt="" style="width: 30%;"></a>
+{% if post.hashtag == None %}
+
+{% else %}
+<p>#{{post.hashtag}}</p>
+{% endif %}
+
+<hr>
+{% endfor %}

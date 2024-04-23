@@ -1,0 +1,5 @@
+<div class="photos">
+    {% for post in posts %}
+    <a href="{{post.image.url}}"><img src="{{post.image.url}}" alt="Photo" /></a>
+    {% endfor %}
+</div>

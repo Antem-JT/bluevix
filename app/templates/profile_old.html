@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    <img src="{{user.coverpic.url}}" alt="" style="width: 5%;">
+    <img src="{{user.avatar.url}}" alt="" srcset="" style="width: 30%;">
+    <h1>{{user.name}}</h1>
+    <h3>@{{user.username}}</h3>
+    {% if user.about == None %}
+
+    {% else %}
+    <p>{{user.about}}</p>
+    {% endif %}
+
+    {% if user.location == None %}
+
+    {% else %}
+    <p>{{user.location}}</p>
+    {% endif %}
+
+
+    {% if user.followers.all.count == 1 %}
+
+    <p>{{user.followers.all.count}} Follower</p>
+
+    {% elif user.followers.all.count > 1 %}
+
+    <p>{{user.followers.all.count}} Followers</p>
+
+    {% endif %}
+
+    <p>{{posts.all.count}} Posts</p>
+
+    {% if request.user.username == user.username %}
+    <a href="{% url 'update-user' %}">Edit Profile</a>
+    {% endif %}
+
+    
+    <form action="" method="post">
+        {% if request.user.username != user.username %}
+        {% csrf_token %}
+        <input type="submit" value="Follow">
+        {% endif %}
+    </form>
+    
+    <hr>
+    {% include 'feed_component.html' %}
+</body>
+</html>
